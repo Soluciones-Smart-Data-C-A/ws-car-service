@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { BcryptService } from 'src/common/services/bcrypt.service';
+import { ConsoleNotificationService } from 'src/common/services/console-notification.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
@@ -15,6 +16,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         }),
     ],
     controllers: [AuthController],
-    providers: [BcryptService, AuthService, JwtStrategy],
+    providers: [BcryptService, AuthService, JwtStrategy, ConsoleNotificationService],
 })
 export class AuthModule { }

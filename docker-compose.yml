@@ -1,32 +1,20 @@
 services:
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: car_service
-    ports:
-      - "3307:3306"
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - mysql_data:/var/lib/mysql
-
   app:
-    build: .
+    build:
+      context: .
+      target: production
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
     environment:
-      - DATABASE_URL=mysql://root:root@db:3306/car_service?allowPublicKeyRetrieval=true&ssl=false
-      - PORT=3000
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=${PORT:-3000}
       - PRISMA_CONFIG_LOADER=tsx
-    depends_on:
-      db:
-        condition: service_healthy
-    command: npm run start:prod
-
-volumes:
-  mysql_data:
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

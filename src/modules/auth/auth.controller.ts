@@ -1,6 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
 import { RegisterFullDto } from './dto/register-full.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 
@@ -8,6 +9,14 @@ import { VerifyOtpDto } from './dto/verify-otp.dto';
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
+
+    @Post('login')
+    @ApiOperation({ summary: 'Inicio de sesión de un usuario ya registrado' })
+    @ApiResponse({ status: 201, description: 'el usuario ha iniciado sesión exitosamente.' })
+    @ApiResponse({ status: 400, description: 'Datos de inicio de sesión inválidos.' })
+    async login(@Body() loginDto: LoginDto) {
+        return await this.authService.login(loginDto);
+    }
 
     @Post('register')
     @ApiOperation({ summary: 'Registrar un nuevo usuario junto con su vehículo' })
