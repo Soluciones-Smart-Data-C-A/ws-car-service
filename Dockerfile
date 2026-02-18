@@ -1,45 +1,60 @@
-# Build Stage
-FROM node:20-alpine AS build
-
+# Stage 1: Dependencies
+FROM node:20-alpine AS deps
 WORKDIR /app
 
-# Copy package files separately for better caching
+# Copy package files first
 COPY package*.json ./
-COPY prisma ./prisma
+COPY prisma ./prisma/
 
-# Install dependencies
-RUN npm ci
+# Install ALL dependencies
+RUN npm install
+
+# Stage 2: Builder
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+# Robust Prisma Environment
+ENV DATABASE_URL="mysql://root:12369*@localhost:3306/car_service"
+ENV PRISMA_SKIP_POSTINSTALL_GENERATE=true
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
 # Generate Prisma client
 RUN npx prisma generate
 
-# Copy source code
-COPY . .
-
 # Build the application
 RUN npm run build
 
-# Production Stage
+# Stage 3: Production
 FROM node:20-alpine AS production
 
+# Install mysql-client for healthcheck
 RUN apk add --no-cache mysql-client
 
 WORKDIR /app
 
-# Copy only necessary files from build stage
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/package*.json ./
-COPY prisma.config.ts ./
+# Environment defaults
+ENV NODE_ENV=production
+ENV PORT=3000
 
-# Copy entrypoint to the correct WORKDIR
-COPY docker-entrypoint.sh ./docker-entrypoint.sh
-RUN chmod +x ./docker-entrypoint.sh
-ENTRYPOINT ["./docker-entrypoint.sh"]
+# Copy artifacts from builder with correct ownership
+COPY --from=builder --chown=node:node /app/dist ./dist
+COPY --from=builder --chown=node:node /app/node_modules ./node_modules
+COPY --from=builder --chown=node:node /app/package*.json ./
+COPY --from=builder --chown=node:node /app/prisma ./prisma
+COPY --from=builder --chown=node:node /app/prisma.config.ts ./
+COPY --from=builder --chown=node:node /app/docker-entrypoint.sh ./
 
-# Expose the application port
+# Setup entrypoint
+RUN sed -i 's/\r$//' ./docker-entrypoint.sh && chmod +x ./docker-entrypoint.sh
+
+# Security: Run as non-root user
+USER node
+
+# Expose port
 EXPOSE 3000
 
-# Command to run the application
+# Execution
+ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["npm", "run", "start:prod"]

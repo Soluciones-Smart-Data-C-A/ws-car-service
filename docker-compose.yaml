@@ -6,9 +6,8 @@ services:
     restart: unless-stopped
     ports:
       - '3000:3000'
-    # Fallback para Linux, aunque en Coolify es mejor usar la IP 172.17.0.1 directamente en el DATABASE_URL
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
+    env_file:
+      - .env
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - PORT=3000
