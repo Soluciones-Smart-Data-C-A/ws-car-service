@@ -34,3 +34,10 @@ CREATE TABLE `Vehicle` (
 
 -- AddForeignKey
 ALTER TABLE `Vehicle` ADD CONSTRAINT `Vehicle_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+CREATE TABLE service_icons (
+    `id` SERIAL PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL,
+    `icon` VARCHAR(50) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

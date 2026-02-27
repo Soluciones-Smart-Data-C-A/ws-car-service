@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, BadRequestException, Injectable } from '@nestjs/common';
 import { BcryptService } from 'src/common/services/bcrypt.service'; // O la interfaz
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RegisterUserDto } from './dto/register-user.dto'; // Ya lo creamos antes
@@ -43,4 +43,9 @@ export class UsersService {
   async findOneByEmail(email: string) {
     return this.prisma.user.findUnique({ where: { email } });
   }
+
+  getAllUsers() {
+       return this.prisma.user.findMany();
+  }
+  
 }

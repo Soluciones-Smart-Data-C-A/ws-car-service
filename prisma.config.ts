@@ -6,6 +6,6 @@ export default defineConfig({
         path: "prisma/migrations",
     },
     datasource: {
-        url: process.env.DATABASE_URL || 'mysql://root:12369*@localhost:3306/car_service',
+        url: process.env.DATABASE_URL || 'mysql://root@localhost:3306/car_service',
     },
 });

@@ -5,9 +5,10 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { VehiclesModule } from './modules/vehicles/vehicles.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { ServiceIconsModule } from './modules/serviceicons/serviceicons.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, VehiclesModule, PrismaModule],
+  imports: [UsersModule, AuthModule, VehiclesModule, PrismaModule, ServiceIconsModule],
   controllers: [AppController],
   providers: [AppService],
 })
