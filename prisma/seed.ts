@@ -89,7 +89,7 @@ async function main() {
 
     // Función de ayuda para encontrar IconId
     const getIconId = (iconName: string) => {
-        return createdIcons.find(i => i.icon === iconName)?.id || createdIcons[0].id;
+        return createdIcons.find((i: any) => i.icon === iconName)?.id || createdIcons[0].id;
     };
 
     // 2. Array de Services Base

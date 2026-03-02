@@ -14,7 +14,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Robust Prisma Environment
-ENV DATABASE_URL="mysql://root:12369*@localhost:3306/car_service"
+ENV DATABASE_URL="mysql://root@localhost:3306/car_service"
 ENV PRISMA_SKIP_POSTINSTALL_GENERATE=true
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -45,6 +45,10 @@ COPY --from=builder --chown=node:node /app/package*.json ./
 COPY --from=builder --chown=node:node /app/prisma ./prisma
 COPY --from=builder --chown=node:node /app/prisma.config.ts ./
 COPY --from=builder --chown=node:node /app/docker-entrypoint.sh ./
+
+# Incluir cliente de prisma generado y configuración TS para el seeder
+COPY --from=builder --chown=node:node /app/src/generated ./src/generated
+COPY --from=builder --chown=node:node /app/tsconfig.json ./
 
 # Setup entrypoint
 RUN sed -i 's/\r$//' ./docker-entrypoint.sh && chmod +x ./docker-entrypoint.sh
