@@ -6,7 +6,8 @@ import { PrismaClient } from 'src/generated/prisma/client';
 export class PrismaService extends PrismaClient implements OnModuleInit {
 
     constructor() {
-        const adapter = new PrismaMariaDb(process.env.DATABASE_URL!);
+        const dbUrl = process.env.DATABASE_URL || 'mysql://root@localhost:3306/car_service';
+        const adapter = new PrismaMariaDb(dbUrl as any);
         super({ adapter, log: ['info', 'warn', 'error'] });
     }
 

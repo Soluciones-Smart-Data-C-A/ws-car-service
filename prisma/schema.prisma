@@ -42,4 +42,53 @@ model Vehicle {
     // Relación con User
     user   User @relation(fields: [userId], references: [id])
     userId Int
+
+    // Relaciones para servicios y predicción
+    serviceRecords ServiceRecord[]
+    mileageHistory MileageHistory[]
+}
+
+model ServiceIcon {
+    id       Int           @id @default(autoincrement())
+    name     String
+    icon     String
+    services Service[]
+    rules    ServiceRule[]
+}
+
+model Service {
+    id          Int             @id @default(autoincrement())
+    serviceName String
+    iconId      Int
+    icon        ServiceIcon     @relation(fields: [iconId], references: [id])
+    records     ServiceRecord[]
+}
+
+model ServiceRule {
+    id          Int         @id @default(autoincrement())
+    serviceName String
+    frequencyKm Int
+    iconId      Int
+    icon        ServiceIcon @relation(fields: [iconId], references: [id])
+}
+
+model ServiceRecord {
+    id        Int      @id @default(autoincrement())
+    vehicleId Int
+    serviceId Int
+    mileage   Int
+    date      DateTime @default(now())
+    notes     String?
+
+    vehicle Vehicle @relation(fields: [vehicleId], references: [id])
+    service Service @relation(fields: [serviceId], references: [id])
+}
+
+model MileageHistory {
+    id        Int      @id @default(autoincrement())
+    vehicleId Int
+    mileage   Int
+    date      DateTime @default(now())
+
+    vehicle Vehicle @relation(fields: [vehicleId], references: [id])
 }
