@@ -55,4 +55,12 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-/generated/prisma
+# /generated/prisma
+
+vehicles_mock_data.json
+
+#test
+test-endpoints.js
+
+# Documentation
+backend_implementation_guide.md

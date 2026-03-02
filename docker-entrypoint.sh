@@ -33,8 +33,11 @@ if [ -n "$DATABASE_URL" ]; then
   echo "✅ ¡Puerto abierto! La base de datos es accesible."
 fi
 
-echo "🚀 Ejecutando migraciones de Prisma..."
-npx prisma migrate deploy
+echo "🚀 Sincronizando esquema Prisma con la base de datos..."
+npx prisma db push --accept-data-loss
+
+echo "🌱 Sembrando datos iniciales (Seeder) si son necesarios..."
+npx prisma db seed
 
 echo "🎬 Iniciando aplicación..."
 exec "$@"
