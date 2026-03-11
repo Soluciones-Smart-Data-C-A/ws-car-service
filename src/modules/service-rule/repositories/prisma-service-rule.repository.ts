@@ -7,31 +7,31 @@ import { ServiceRule } from 'src/generated/prisma/client';
 
 @Injectable()
 export class PrismaServiceRuleRepository implements IServiceRuleRepository {
-    constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-    async create(data: CreateServiceRuleDto): Promise<ServiceRule> {
-        return this.prisma.serviceRule.create({ data });
-    }
+  async create(data: CreateServiceRuleDto): Promise<ServiceRule> {
+    return this.prisma.serviceRule.create({ data });
+  }
 
-    async findAll(): Promise<ServiceRule[]> {
-        return this.prisma.serviceRule.findMany({ include: { icon: true } });
-    }
+  async findAll(): Promise<ServiceRule[]> {
+    return this.prisma.serviceRule.findMany({ include: { icon: true } });
+  }
 
-    async findById(id: number): Promise<ServiceRule | null> {
-        return this.prisma.serviceRule.findUnique({
-            where: { id },
-            include: { icon: true }
-        });
-    }
+  async findById(id: number): Promise<ServiceRule | null> {
+    return this.prisma.serviceRule.findUnique({
+      where: { id },
+      include: { icon: true },
+    });
+  }
 
-    async update(id: number, data: UpdateServiceRuleDto): Promise<ServiceRule> {
-        return this.prisma.serviceRule.update({
-            where: { id },
-            data,
-        });
-    }
+  async update(id: number, data: UpdateServiceRuleDto): Promise<ServiceRule> {
+    return this.prisma.serviceRule.update({
+      where: { id },
+      data,
+    });
+  }
 
-    async delete(id: number): Promise<ServiceRule> {
-        return this.prisma.serviceRule.delete({ where: { id } });
-    }
+  async delete(id: number): Promise<ServiceRule> {
+    return this.prisma.serviceRule.delete({ where: { id } });
+  }
 }

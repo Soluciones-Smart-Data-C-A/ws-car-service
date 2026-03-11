@@ -5,29 +5,30 @@ import { PrismaServiceRepository } from './repositories/prisma-service.repositor
 
 @Injectable()
 export class ServiceService {
-    constructor(private readonly serviceRepository: PrismaServiceRepository) { }
+  constructor(private readonly serviceRepository: PrismaServiceRepository) {}
 
-    async create(createServiceDto: CreateServiceDto) {
-        return this.serviceRepository.create(createServiceDto);
-    }
+  async create(createServiceDto: CreateServiceDto) {
+    return this.serviceRepository.create(createServiceDto);
+  }
 
-    async findAll() {
-        return this.serviceRepository.findAll();
-    }
+  async findAll() {
+    return this.serviceRepository.findAll();
+  }
 
-    async findOne(id: number) {
-        const service = await this.serviceRepository.findById(id);
-        if (!service) throw new NotFoundException(`Service with ID ${id} not found`);
-        return service;
-    }
+  async findOne(id: number) {
+    const service = await this.serviceRepository.findById(id);
+    if (!service)
+      throw new NotFoundException(`Service with ID ${id} not found`);
+    return service;
+  }
 
-    async update(id: number, updateServiceDto: UpdateServiceDto) {
-        await this.findOne(id);
-        return this.serviceRepository.update(id, updateServiceDto);
-    }
+  async update(id: number, updateServiceDto: UpdateServiceDto) {
+    await this.findOne(id);
+    return this.serviceRepository.update(id, updateServiceDto);
+  }
 
-    async remove(id: number) {
-        await this.findOne(id);
-        return this.serviceRepository.delete(id);
-    }
+  async remove(id: number) {
+    await this.findOne(id);
+    return this.serviceRepository.delete(id);
+  }
 }

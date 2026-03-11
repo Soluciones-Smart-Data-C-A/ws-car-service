@@ -1,7 +1,7 @@
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
-import { PrismaClient } from '../src/generated/prisma/client';
-import * as dotenv from 'dotenv';
 import * as bcrypt from 'bcrypt';
+import * as dotenv from 'dotenv';
+import { PrismaClient } from '../src/generated/prisma/client';
 
 dotenv.config();
 
@@ -40,15 +40,18 @@ async function main() {
         // User 2
         { make: 'Ford', model: 'Focus', plate: 'JIN-201', initialMileage: 50000, currentMileage: 55000, lastServiceDate: new Date('2024-01-04'), lastServiceMileage: 50000, userId: createdUsers[1].id },
         { make: 'Ford', model: 'Ranger', plate: 'GJR-282', initialMileage: 1000, currentMileage: 5000, lastServiceDate: new Date('2023-12-22'), lastServiceMileage: 1000, userId: createdUsers[1].id },
+        { make: 'Ford', model: 'Focus', plate: 'JIP-270', initialMileage: 47886, currentMileage: 138729, lastServiceDate: new Date('2023-12-22'), lastServiceMileage: 132458, userId: createdUsers[1].id },
         // User 3
         { make: 'Hyundai', model: 'Accent', plate: 'JAC-474', initialMileage: 20000, currentMileage: 25000, lastServiceDate: new Date('2024-02-16'), lastServiceMileage: 20000, userId: createdUsers[2].id },
         { make: 'Mazda', model: 'Mazda3', plate: 'MTC-156', initialMileage: 15000, currentMileage: 20000, lastServiceDate: new Date('2023-09-06'), lastServiceMileage: 15000, userId: createdUsers[2].id },
+        { make: 'Hyundai', model: 'Elantra', plate: 'FLW-588', initialMileage: 24429, currentMileage: 100262, lastServiceDate: new Date('2023-09-06'), lastServiceMileage: 93623, userId: createdUsers[2].id },
         // User 4
         { make: 'Toyota', model: 'Corolla', plate: 'SAX-276', initialMileage: 5000, currentMileage: 10000, lastServiceDate: new Date('2024-01-25'), lastServiceMileage: 5000, userId: createdUsers[3].id },
         { make: 'Volkswagen', model: 'Jetta', plate: 'OKM-688', initialMileage: 25000, currentMileage: 30000, lastServiceDate: new Date('2023-11-17'), lastServiceMileage: 25000, userId: createdUsers[3].id },
         // User 5
         { make: 'Nissan', model: 'Altima', plate: 'LCX-613', initialMileage: 15000, currentMileage: 20000, lastServiceDate: new Date('2024-02-27'), lastServiceMileage: 15000, userId: createdUsers[4].id },
         { make: 'Nissan', model: 'Frontier', plate: 'MHZ-675', initialMileage: 30000, currentMileage: 35000, lastServiceDate: new Date('2023-09-02'), lastServiceMileage: 30000, userId: createdUsers[4].id },
+        { make: 'Kia', model: 'Sportage', plate: 'GWO-297', initialMileage: 38241, currentMileage: 60846, lastServiceDate: new Date('2023-09-02'), lastServiceMileage: 30000, userId: createdUsers[4].id }
     ];
 
     for (const vData of vehiclesData) {

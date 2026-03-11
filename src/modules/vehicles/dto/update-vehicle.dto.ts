@@ -1,6 +1,5 @@
-import { PartialType } from "@nestjs/swagger";
-import { CreateVehicleDto } from "./create-vehicle.dto";
-
+import { PartialType } from '@nestjs/swagger';
+import { CreateVehicleDto } from './create-vehicle.dto';
 
 //Hereda todo de CreateVehicleDto pero con campos opcionales
-export class UpdateVehicleDto extends PartialType(CreateVehicleDto) { }
+export class UpdateVehicleDto extends PartialType(CreateVehicleDto) {}

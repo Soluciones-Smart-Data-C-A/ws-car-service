@@ -1,3 +1,3 @@
 export interface INotificationService {
-    sendOTP(to: string, code: string): Promise<void>;
+  sendOTP(to: string, code: string): Promise<void>;
 }

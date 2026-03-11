@@ -7,6 +7,6 @@ import { PrismaServiceRepository } from './repositories/prisma-service.repositor
 @Module({
   imports: [PrismaModule],
   controllers: [ServiceController],
-  providers: [PrismaServiceRepository, ServiceService]
+  providers: [PrismaServiceRepository, ServiceService],
 })
-export class ServiceModule { }
+export class ServiceModule {}

@@ -7,6 +7,6 @@ import { PrismaServiceIconRepository } from './repositories/prisma-service-icon.
 @Module({
   imports: [PrismaModule],
   controllers: [ServiceIconController],
-  providers: [PrismaServiceIconRepository, ServiceIconService]
+  providers: [PrismaServiceIconRepository, ServiceIconService],
 })
-export class ServiceIconModule { }
+export class ServiceIconModule {}

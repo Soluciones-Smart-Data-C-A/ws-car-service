@@ -7,6 +7,6 @@ import { PrismaServiceRuleRepository } from './repositories/prisma-service-rule.
 @Module({
   imports: [PrismaModule],
   controllers: [ServiceRuleController],
-  providers: [PrismaServiceRuleRepository, ServiceRuleService]
+  providers: [PrismaServiceRuleRepository, ServiceRuleService],
 })
-export class ServiceRuleModule { }
+export class ServiceRuleModule {}
